@@ -34,8 +34,6 @@ def get_file_unit():
 	else:
 		print("Sorry %s is not a known file unit" % (FILE_UNIT.upper()))
 		return(1)
-		
-loop(get_file_unit)
 
 # get file number size
 def get_file_number_size():
@@ -48,8 +46,6 @@ def get_file_number_size():
 	except:
 		print("Sorry %s is a non positive whole integer value" % (FILE_SIZE))
 		return(1)
-
-loop(get_file_number_size)
 
 # get internet speed
 def get_internet_speed():
@@ -97,8 +93,7 @@ def get_internet_speed():
 	# Megabits to Megabytes
 	INTERNET_DOWNLOAD_SPEED_MEGABYTES = int(INTERNET_DOWNLOAD_SPEED) / 8
 	INTERNET_DOWNLOAD_SPEED = INTERNET_DOWNLOAD_SPEED_MEGABYTES
-
-loop(get_internet_speed)
+	
 # calculate the times
 def print_result():
 	def print_times(inital_unit, inital_size, download_speed, seconds):
@@ -133,4 +128,19 @@ def print_result():
 		SECONDS_DL = int(SECONDS_DL_pre[0])
 		print_times(FILE_UNIT, FILE_SIZE, INTERNET_DOWNLOAD_SPEED, SECONDS_DL)
 
-print_result()
+def main():
+	# handle the (lack thereof) args passed to the script
+	if len(sys.argv) == 1:
+		# fully interactive
+		loop(get_file_unit)
+		loop(get_file_number_size)
+		loop(get_internet_speed)
+	else:
+		# parse args:
+		# --file-unit --file-size --download-speed
+		pass
+		
+	# print results
+	print_result()
+	
+main()

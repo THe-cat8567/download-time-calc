@@ -138,9 +138,46 @@ def main():
 	else:
 		# parse args:
 		# --file-unit --file-size --download-speed
-		pass
-		
+		args = ['--file-unit', '--file-size', '--download-speed']
+		FILE_UNIT_SET = 0
+		FILE_SIZE_SET = 0
+		INTERNET_DOWNLOAD_SPEED_SET = 0
+		for a in sys.argv:
+			if a in args:
+				arg_position = sys.argv.index(a)
+				arg_arg_position = int(arg_position) + 1
+				try:
+					arg_arg_value = sys.argv[arg_arg_position]
+				except:
+					print("%s is not given a argument, exiting" % (a))
+					exit(1)
+			if a == args[0]:
+				global FILE_UNIT
+				FILE_UNIT = arg_arg_value
+				FILE_UNIT_SET = 1
+			elif a == args[1]:
+				global FILE_SIZE
+				FILE_SIZE = arg_arg_value
+				FILE_SIZE_SET = 1
+			elif a == args[2]:
+				global INTERNET_DOWNLOAD_SPEED
+				INTERNET_DOWNLOAD_SPEED = int(arg_arg_value)
+				INTERNET_DOWNLOAD_SPEED_SET = 1
+
+		if FILE_UNIT_SET != 1:
+			loop(get_file_unit)
+		elif FILE_SIZE_SET != 1:
+			loop(get_file_number_size)
+		elif INTERNET_DOWNLOAD_SPEED_SET != 1:
+			loop(get_internet_speed)
+			
 	# print results
 	print_result()
-	
-main()
+
+# main program
+# handle Ctrl-C
+try:	
+	main()
+except KeyboardInterrupt:
+	print("Ctrl-C detected, exiting now")
+	exit(0)
